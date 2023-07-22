@@ -1,0 +1,10 @@
+
+RewriteEngine On
+
+# Remove o "index.php" da URL
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# Se você estiver usando o CodeIgniter em um subdiretório, adicione a seguinte linha e substitua "/subdiretorio/" pelo caminho correto.
+# RewriteBase /subdiretorio/
