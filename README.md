@@ -54,7 +54,7 @@ git clone https://github.com/Dassuen/task_manager.git
 
 ## Autor
 
-Dassuen Cabral - [Seu Site](https://unifybrasil.com)
+Dassuen Cabral - [Unify](https://unifybrasil.com)
 
 ## Licença
 
