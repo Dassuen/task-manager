@@ -26,15 +26,14 @@ class Task_model extends CI_Model {
         $result = $query->row();
         return $result->user_id;
     }
-    public function create_task($data) {
+    public function add_task($data) {
         // Inserir a nova tarefa no banco de dados
-        $data["user_id"] = $this->session->user_id;
-        $this->db->insert('tasks', $data);
+        return $this->db->insert('tasks', $data);
     }
     public function update_task($taskId, $data)
     {
         $this->db->where('id', $taskId);
-        $this->db->update('tasks', $data);
+        return $this->db->update('tasks', $data);
     }
     public function update_task_order($order_array) {
         // Atualizar a ordem das tarefas no banco de dados
@@ -48,6 +47,6 @@ class Task_model extends CI_Model {
     }    
     public function delete_task($id) {
         // Excluir uma tarefa específica pelo ID
-        $this->db->delete('tasks', array('id' => $id));
+        return $this->db->delete('tasks', array('id' => $id));
     }
 }

@@ -8,12 +8,12 @@
      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 <style>
-    /* a{
+    a{
         text-decoration:none;
     }
-    /* Estilize as tarefas com fundo cinza 
+    /* Estilize as tarefas com fundo cinza */
     .sortable-item {
-        background-color: #060606b3;
+        /* background-color: #060606b3; */
         cursor: move;
         padding: 8px 12px;
         margin-bottom: 4px;
@@ -46,7 +46,7 @@
 
     .btn-create-task {
         margin-top: 20px;
-    } */
+    }
 </style>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">

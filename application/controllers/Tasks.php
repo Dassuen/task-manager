@@ -5,11 +5,12 @@ class Tasks extends CI_Controller {
         parent::__construct();
         // Carregar o modelo "Task_model"
         $this->load->model('Task_model');
+        $this->load->library('form_validation');
     }
     public function index() {
         // Verifica se o usuário está logado
         if (!$this->session->userdata('user_id')) {
-            redirect('auth');
+            redirect('auth ');
             return;
         }
 
@@ -24,9 +25,33 @@ class Tasks extends CI_Controller {
         $this->load->view('tasks/list', $data);
     }
 
-    public function create() {
-        // Carregar a visão "tasks/create"
-        $this->load->view('tasks/create');
+    // Função para adicionar uma nova tarefa
+    public function add_task() {
+        $this->form_validation->set_rules('title', 'Título', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('description', 'Descrição', 'trim|max_length[500]');
+        $this->form_validation->set_rules('status', 'Descrição', 'trim');
+        $this->form_validation->set_rules('due_date', 'Descrição', 'trim');
+        if ($this->form_validation->run() === FALSE) {
+            $response['status'] = 'error';
+        } else {
+            $post = $this->input->post();
+            $task_data = array(
+                'title' => $post['title'],
+                'description' => $post['description'],
+                'status' => $post['status'],
+                'due_date' => $post['due_date'],
+                'user_id' => $this->session->userdata('user_id') // Obtém o ID do usuário logado
+            );
+            if ($this->Task_model->add_task($task_data)) {
+                $response['status'] = 'success';
+                $response['message'] = 'Tarefa adicionada com sucesso';
+            } else {
+                $response['status'] = 'error';
+                $response['message'] = 'Erro ao adicionar uma nova tarefa';
+            }
+        }
+
+        echo json_encode($response);
     }
     public function edit_task()
     {
@@ -46,14 +71,11 @@ class Tasks extends CI_Controller {
             redirect('tasks');
         }
 
-        // Obter os dados do formulário enviado via AJAX
-        $taskTitle = $post['editTaskTitle'];
-        $taskStatus = $post['editTaskStatus'];
-
         // Atualizar os dados da tarefa no banco de dados
         $data = array(
-            'title' => $taskTitle,
-            'status' => $taskStatus
+            'title' => $post['editTaskTitle'],
+            'status' => $post['editTaskStatus'],
+            "due_date" => $post['due_date'],
         );
 
         $this->Task_model->update_task($taskId, $data);
